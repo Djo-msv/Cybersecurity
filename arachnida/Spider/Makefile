@@ -3,8 +3,8 @@ MAKEFLAGS += --no-print-directory
 
 #==============================COMPIL===========================#
 
-CC = g++
-CFLAGS = 
+CC = c++
+CFLAGS = -std=c++11
 VALUE =
 ifeq ($(DEBUG), 1)
 	CFLAGS += -g
@@ -46,7 +46,10 @@ BUILD_DIR	:=	.build
 
 SRCS_FILES	:=	main.cpp \
 				parserSetting.cpp \
-				readWebPages.cpp
+				readWebPages.cpp \
+				utils.cpp \
+				webParser.cpp \
+				imgDownload.cpp
 
 SRCS	:=		$(addprefix $(SRC_DIR)/, $(SRCS_FILES))
 
@@ -75,7 +78,7 @@ $(DIRS):
 
 $(NAME):  $(OBJS)
 	@echo "\n$(GREEN)Create binaries$(NOC)"
-	$(CC) $(CFLAGS) $(OBJS) $(INC) -o $@
+	$(CC) $(CFLAGS) $(OBJS) $(INC) $(LIB) -o $@
 	@echo "$(RED)"
 	@echo "              ( ";
 	@echo "               ) ";
@@ -95,7 +98,7 @@ $(NAME):  $(OBJS)
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp | $(DIRS)
 	@mkdir -p $(BUILD_DIR)
-	@$(CC) $(CFLAGS) $(VALUE) $(INC) $(LIB) -MMD -MP -c $< -o $@
+	@$(CC) $(CFLAGS) $(VALUE) $(INC) -MMD -MP -c $< -o $@
 
 clean:
 	@echo "$(RED)Remove objects$(NOC)"

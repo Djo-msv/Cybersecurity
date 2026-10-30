@@ -18,8 +18,8 @@ int	main(int argc, char **argv) {
 		_depth = _setting.getDepth();
 		_path = _setting.getPath();
 
-		if (access(chemin, F_OK) == -1)
-			throw std::invalid_argument(std::string("wrong path"));
+		if (access(_path.c_str(), F_OK) == -1)
+			throw std::invalid_argument(std::string("The access path ") + _path + std::string("does not exist or is not accessible."));
 
 		std::unordered_set<std::string>	_alredyPassHere;
 		std::deque<std::pair<uint8_t, std::string>> _links{{0, _setting.getUrl()}};   
@@ -34,13 +34,14 @@ int	main(int argc, char **argv) {
 				continue ;
 			}
 			if (readWebPages(_links.front().second, _buffer) != 0) {
-				// TODO print url inacsessible
+				fprintf(stderr, "Failed to access url [%s]\n", _links.front().second);
 				_links.pop_front();
 				continue ;
 			}
 			if (_links.front().first < _depth) {}
-				parseWebHref(_buffer, _links, _links.front().first() + 1); // add each href to _links TODO normaliz url before
-			parseWebImg(path, _buffer);
+				parseWebHref(_buffer, _links, _links.front().first + 1, _setting.getUrl()); // add each href to _links TODO normaliz url before
+			std::cout << _links.size() << std::endl;
+			parseWebImg(_path, _buffer, _setting.getUrl());
 			_alredyPassHere.insert(_links.front().second);
 			_links.pop_front();
 		}

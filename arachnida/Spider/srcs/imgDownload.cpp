@@ -1,4 +1,5 @@
 #include <curl/curl.h>
+#include <spider.hpp>
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -39,17 +40,20 @@ CURLcode curl_read(const std::string& url, std::ostream& os, long timeout = 30)
 	return code;
 }
 
-int downloadImg(std::string &path, std::string &url)
+int downloadImg(std::string &path, std::string url)
 {
 	curl_global_init(CURL_GLOBAL_ALL);
+	std::cout << url << std::endl;
 
-	std::string	file = path + generate_random_string(10) + std::string(url, url.find('.'), url.end());
+	std::string	file = path + generate_random_string(10) + std::string(url.begin() + url.rfind('.'), url.end());
 
 	std::ofstream ofs(file.c_str(), std::ostream::binary);
 
 	if (CURLE_OK != curl_read(url, ofs)) {
-		// TODO print error
+		fprintf(stderr, "Failed to download Img [%s]\n", file.c_str());
+		return (1);
 	}
 
 	curl_global_cleanup();
+	return (0);
 }
