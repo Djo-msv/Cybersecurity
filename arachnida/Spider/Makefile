@@ -45,11 +45,8 @@ BUILD_DIR	:=	.build
 #==============================SOURCES===========================#
 
 SRCS_FILES	:=	main.cpp \
-				parserSetting.cpp \
-				readWebPages.cpp \
-				utils.cpp \
-				webParser.cpp \
-				imgDownload.cpp
+				Parser/Parser.cpp \
+				Parser/ParserHandleOption.cpp
 
 SRCS	:=		$(addprefix $(SRC_DIR)/, $(SRCS_FILES))
 
@@ -63,7 +60,14 @@ DEPS:=			${SRCS:$(SRC_DIR)/%.cpp=$(BUILD_DIR)/%.d}
 
 #=============================INCLUDES===========================#
 
-INC:=			-I$(HEADER_DIR) -I$(HOME)/.local/include -L$(HOME)/.local/lib -lcurl -Wl,-rpath,$(HOME)/.local/lib
+INC_DIR		:=	-I$(HEADER_DIR) \
+				-I$(HOME)/.local/include
+
+LIB_DIR		:=	-L$(HOME)/.local/lib
+
+LIBS		:=	-lcurl
+
+RPATH		:=	-Wl,-rpath,$(HOME)/.local/lib
 
 #================================DIR=============================#
 
@@ -78,7 +82,7 @@ $(DIRS):
 
 $(NAME):  $(OBJS)
 	@echo "\n$(GREEN)Create binaries$(NOC)"
-	$(CC) $(CFLAGS) $(OBJS) $(INC) $(LIB) -o $@
+	$(CC) $(CFLAGS) $(OBJS) $(LIB_DIR) $(LIBS) $(RPATH) -o $@
 	@echo "$(RED)"
 	@echo "              ( ";
 	@echo "               ) ";
@@ -98,7 +102,7 @@ $(NAME):  $(OBJS)
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp | $(DIRS)
 	@mkdir -p $(BUILD_DIR)
-	@$(CC) $(CFLAGS) $(VALUE) $(INC) -MMD -MP -c $< -o $@
+	@$(CC) $(CFLAGS) $(VALUE) $(INC_DIR) -MMD -MP -c $< -o $@
 
 clean:
 	@echo "$(RED)Remove objects$(NOC)"
