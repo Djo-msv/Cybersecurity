@@ -46,7 +46,9 @@ BUILD_DIR	:=	.build
 
 SRCS_FILES	:=	main.cpp \
 				Parser/Parser.cpp \
-				Parser/ParserHandleOption.cpp
+				Parser/ParserHandleOption.cpp \
+				Thread/ThreadPool.cpp \
+				Thread/WorkerThread.cpp \
 
 SRCS	:=		$(addprefix $(SRC_DIR)/, $(SRCS_FILES))
 
