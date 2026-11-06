@@ -1,4 +1,5 @@
-#include "Parser.hpp"
+#include <exception>
+#include "parser.hpp"
 
 int	Parser::handleOption(StringArray &array, StringArray::iterator pnt) {
 	std::string	arg = (*pnt);
@@ -8,7 +9,7 @@ int	Parser::handleOption(StringArray &array, StringArray::iterator pnt) {
 		StringArray::iterator tmp = pnt;
 		tmp++;
 		if (*it == 'g')
-			setKey();
+			setKey(array, tmp);
 		else if (*it == 'k')
 			setPath(array, tmp);
 		else
@@ -23,8 +24,6 @@ void	Parser::setKey(StringArray &array, StringArray::iterator &pnt) {
 	if (pnt == array.end())
 		throw std::invalid_argument(std::string("Missing arguments for -g option"));
 	std::string	arg = (*pnt);
-	if (arg.size() < 64)
-		throw std::invalid_argument(std::string("the -g option takes a minimum 64-bits key"));
 	_key = std::string(arg);
 	pnt = array.erase(pnt);
 	_hasKey = true;

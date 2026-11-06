@@ -45,6 +45,16 @@ BUILD_DIR	:=	.build
 #==============================SOURCES===========================#
 
 SRCS_FILES	:=	main.cpp \
+				File/readFile.cpp \
+				File/writeFile.cpp \
+				Hmac/hmac.cpp \
+				Hotp/hotp.cpp \
+				Parser/parser.cpp \
+				Parser/parserHandleOption.cpp \
+				Sha/sha-1.cpp \
+				Sha/sha-256.cpp \
+				Sha/sha-512.cpp \
+				Totp/totp.cpp
 
 SRCS	:=		$(addprefix $(SRC_DIR)/, $(SRCS_FILES))
 
@@ -63,7 +73,7 @@ INC_DIR		:=	-I$(HEADER_DIR) \
 
 LIB_DIR		:=	-L$(HOME)/.local/lib
 
-LIBS		:=	-lcurl
+LIBS		:=	-lcurl -lcrypto
 
 RPATH		:=	-Wl,-rpath,$(HOME)/.local/lib
 

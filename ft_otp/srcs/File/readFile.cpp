@@ -1,17 +1,15 @@
+#include "file.hpp"
 
-std::string getKey(std::string path);
+std::string getKey(std::string path) {
 	std::string myKey;
-	ifstream file;
+	std::ifstream file;
 
-	file.exceptions (ifstream::badbit);
-	try {
-		file.open(path.c_str());
-		char ch;
-		while(file.get(ch))
-			myKey.append(ch);
-		MyFile.close();
-	} catch (const ifstream::failure& e) {
-		cout << "Exception opening/reading file";
-	}
+	file.open(path.c_str());
+	if (!file)
+		throw std::runtime_error("Unable to create file");
+	char ch;
+	while(file.get(ch))
+		myKey.push_back(ch);
+	file.close();
 	return (myKey);
 }

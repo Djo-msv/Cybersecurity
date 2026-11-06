@@ -1,10 +1,10 @@
+#include "sha.hpp"
 
-
-std::string sha1(const std::string& input)
+std::string sha256(const std::string& input)
 {
     unsigned char hash[SHA_DIGEST_LENGTH];
 
-    SHA1(
+    SHA256(
         reinterpret_cast<const unsigned char*>(input.c_str()),
         input.size(),
         hash

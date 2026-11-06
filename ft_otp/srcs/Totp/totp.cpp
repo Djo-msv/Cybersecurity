@@ -1,4 +1,6 @@
+#include "otp.hpp"
 
+#include <ctime>
 
 uint32_t	totp(uint8_t *key) {
 	size_t	x = 30;

@@ -1,5 +1,6 @@
-#include "Parser.hpp"
-#include "Totp.hpp"
+#include "parser.hpp"
+#include "file.hpp"
+#include "otp.hpp"
 
 void	trunkKey(std::string &key) {
 
@@ -7,21 +8,24 @@ void	trunkKey(std::string &key) {
 		key = sha1(key);
 
 	key.resize(64, 0);
-	return ();
+	return ;
 }
 
 void	startProgram(Parser &setting) {
 	if (setting.getHasKey()) {
 		try {
 			setKeyEncryption(setting.getKey());
+		} catch (const std::exception& e) {
+			std::cout << e.what() << std::endl;
+			return ;
 		}
 	}
 	if (setting.getHasPath()) {
 		try {
 			std::string key = getKey(setting.getPath());
 			trunkKey(key);
-			std::cout << Totp((uint8_t *)key.c_str()) << std::endl;
-		} catch (const std::exeption& e) {
+			std::cout << totp((uint8_t *)key.c_str()) << std::endl;
+		} catch (const std::exception& e) {
 			std::cout << e.what() << std::endl;
 			return ;
 		}

@@ -1,11 +1,13 @@
+#include "file.hpp"
+#include "sha.hpp"
 
 void setKeyEncryption(std::string key) {
-	ofstream	MyFile("ft_otp.key");
+	std::ofstream	file("ft_otp.key");
 
 	if (!file)
-		throw std::runtime_error("Unable to open file");
+		throw std::runtime_error("Unable to create file");
 
-	MyFile << sha1(key);
+	file << sha1(key);
 
-	MyFile.close();
+	file.close();
 }

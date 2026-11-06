@@ -33,14 +33,14 @@ class Parser {
 		bool getHasPath();
 		std::string getKey();
 		std::string getPath();
-		
+
 	private :
 		int		handleOption(StringArray &array, StringArray::iterator pnt);
 
 		void	setHasKey();
 		void	setHasPath();
-		void	setKey(std::string argument);
-		void	setPath(std::string argument);
+		void	setKey(StringArray &argument, StringArray::iterator &pnt);
+		void	setPath(StringArray &argument, StringArray::iterator &pnt);
 
 		bool		_hasKey = false;
 		bool		_hasPath = false;
